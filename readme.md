@@ -1,5 +1,5 @@
-###docker compose for a php7 based infrastructure
-includes redis, memcached, mariadb, nginx+php-fpm###
+###docker compose for a php7 based infrastructure###
+#####includes redis, memcached, mariadb, nginx+php-fpm####
 
 ###Requirments:###
 * docker
@@ -17,12 +17,12 @@ to import an existing db or run other scripts/sql put it on mariadbserver/docker
 mysql data volume is in the local folder ./data/mariadb alternative would be building a dedicated docker volume container
 redis persistency data volume is in the local folder ./data/redis
 
-refer to official documentations for extra settings
+#####refer to official documentations for extra settings#####
 https://hub.docker.com/_/mariadb/
 https://hub.docker.com/_/redis/
 https://hub.docker.com/_/memcached/
 
 windows/mac use https://docs.docker.com/machine/ or a linux vm
 
-TODO:
-refactor scripts
+######TODO:######
+refactor scripts and nginx conf
