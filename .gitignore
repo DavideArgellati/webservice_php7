@@ -1,0 +1,5 @@
+envvars
+data/mariadb/*
+data/redis/*
+log/*
+**/**/sites-available/sitesconfig

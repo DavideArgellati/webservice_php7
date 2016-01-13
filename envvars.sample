@@ -1,0 +1,6 @@
+export CODEPATH="/media/davide/D/www/"
+export MYSQL_USER=admin
+export MYSQL_PASSWORD=password
+export MYSQL_DATABASE=mydb
+export MYSQL_ROOT_PASS=password
+

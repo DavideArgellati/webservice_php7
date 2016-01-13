@@ -1,0 +1,37 @@
+FROM debian:jessie
+
+WORKDIR /tmp
+RUN apt-get -y update && apt-get -y install wget
+
+ADD etc/apt/ /etc/apt/
+RUN wget -q http://www.dotdeb.org/dotdeb.gpg && \
+	apt-key add dotdeb.gpg && \
+	rm dotdeb.gpg
+
+# Install packages
+RUN apt-get -y update && \
+	apt-get -y install procps net-tools nano less monit locales-all \
+		nginx-full php5-fpm php5-cli \
+		php5-intl php5-memcache php7.0-memcached php5-mysql \
+		php5-curl php5-gmp php5-mcrypt php5-redis php-pear && \
+    pecl install xdebug
+
+# Configure nginx
+RUN rm -f /etc/nginx/sites-enabled/* /etc/nginx/sites-available/*
+COPY nginx/* /etc/nginx/
+# Copy directly into sites-enabled to save a build step
+COPY nginx/sites-available/* /etc/nginx/sites-enabled/
+COPY nginx/conf.d/* /etc/nginx/conf.d/
+#override to listen tcp
+RUN sed -i -r 's@listen = /var/run/php5-fpm.sock@listen = 127.0.0.1:9000@' /etc/php5/fpm/pool.d/www.conf
+#php datetime
+RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
+RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/cli/php.ini
+
+# Configure monit to run the required services
+COPY monit/* /etc/monit/conf.d/
+
+EXPOSE 80 443
+
+# Monit will host all of the services
+CMD ["/usr/bin/monit", "-I", "-c", "/etc/monit/monitrc"]
