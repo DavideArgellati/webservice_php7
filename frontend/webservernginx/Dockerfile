@@ -2,6 +2,7 @@ FROM debian:jessie
 
 WORKDIR /tmp
 RUN apt-get -y update && apt-get -y install wget git build-essential unzip curl
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 ADD etc/apt/ /etc/apt/
 RUN wget -q http://www.dotdeb.org/dotdeb.gpg && \
@@ -17,6 +18,7 @@ RUN apt-get -y update && \
 
 RUN git clone https://github.com/igbinary/igbinary7.git && cd igbinary7 && phpize && ./configure && make && make install
 
+# following php extension can be added above when packages are ready
 RUN apt-get install -y libmemcached-dev pkg-config
 RUN git clone https://github.com/php-memcached-dev/php-memcached.git && ls -la && \
     cd php-memcached \
@@ -46,8 +48,6 @@ RUN unzip /xdebug-master.zip \
     && cd / \
     && rm xdebug-master.zip \
     && rm -rf xdebug-master
-
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # Configure nginx
 RUN rm -f /etc/nginx/sites-enabled/* /etc/nginx/sites-available/*
