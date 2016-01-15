@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 WORKDIR /tmp
-RUN apt-get -y update && apt-get -y install wget git build-essential unzip
+RUN apt-get -y update && apt-get -y install wget git build-essential unzip curl
 
 ADD etc/apt/ /etc/apt/
 RUN wget -q http://www.dotdeb.org/dotdeb.gpg && \
@@ -46,6 +46,8 @@ RUN unzip /xdebug-master.zip \
     && cd / \
     && rm xdebug-master.zip \
     && rm -rf xdebug-master
+
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # Configure nginx
 RUN rm -f /etc/nginx/sites-enabled/* /etc/nginx/sites-available/*

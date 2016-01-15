@@ -2,4 +2,5 @@ envvars
 data/mariadb/*
 data/redis/*
 log/*
+init.sql
 **/**/sites-available/sitesconfig

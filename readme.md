@@ -11,11 +11,11 @@
 * run ./composeup.sh it will source the envvars and start docker
 
 ###Details:###
-mariadb will create a db with user and password specified in envvars,
-to import an existing db or run other scripts/sql put it on mariadbserver/docker-entrypoint-initdb.d
-.sh and .sql will be executed automatically.
-mysql data volume is in the local folder ./data/mariadb alternative would be building a dedicated docker volume container
-redis persistency data volume is in the local folder ./data/redis
+* mariadb will create a db with user and password specified in envvars,
+* to import an existing db or run other scripts/sql files put it on mariadbserver/docker-entrypoint-initdb.d
+  .sh and .sql will be executed automatically. By default the example sets the mariadb query cache.
+* mysql data volume is in the local folder ./data/mariadb (alternative would be building a dedicated docker volume container)
+* redis persistency data volume is in the local folder ./data/redis
 
 #####refer to official documentations for extra settings#####
 https://hub.docker.com/_/mariadb/
@@ -26,3 +26,4 @@ windows/mac use https://docs.docker.com/machine/ or a linux vm
 
 ######TODO:######
 refactor scripts and nginx conf
+
